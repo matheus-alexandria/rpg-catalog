@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="w-screen h-screen flex items-center justify-center">
-      <div className="w-3/4 m-2 flex bg-gray-800 p-8 rounded-xl">
+      <div className="w-3/4 m-2 flex bg-zinc-700 p-8 rounded-xl">
         <Image className="mr-8" src="/dnd_handbook.jpg" alt='DnD Players Handbook facecover' width={350} height={200}/>
         
         <div className="flex flex-col rounded-xl p-3">
@@ -21,10 +21,10 @@ export default function Home() {
             role-playing video game genre.
           </p>
           <ul>
-            <li>Sistema: d20</li>
-            <li>Última edição: 5 edição</li>
-            <li>Ano de publicação: 1974</li>
-            <li>Número de jogadores: 2-12</li>
+            <li><b>Sistema:</b> d20</li>
+            <li><b>Última edição:</b> 5 edição</li>
+            <li><b>Ano de publicação:</b> 1974</li>
+            <li><b>Número de jogadores:</b> 2-12</li>
           </ul>
         </div>
       </div>
