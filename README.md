@@ -1,3 +1,5 @@
+## TTRPG Catalog
+
 This is a TTRPG catalog made with NextJS. The purpose of this project is to catalog a number of TTRPG for anyone to
 choose what to play based on a series of data about each game.
 
