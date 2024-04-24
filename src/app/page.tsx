@@ -1,32 +1,13 @@
+import Card from "@/components/Card";
+import CardExpanded from "@/components/CardExpanded";
 import Image from "next/image";
 
 
 export default function Home() {
   return (
-    <main className="w-screen h-screen flex items-center justify-center">
-      <div className="w-3/4 m-2 flex bg-zinc-700 p-8 rounded-xl">
-        <Image className="mr-8" src="/dnd_handbook.jpg" alt='DnD Players Handbook facecover' width={350} height={200}/>
-        
-        <div className="flex flex-col rounded-xl p-3">
-          <b className="text-5xl font-serif">Dungeons & Dragons</b>
-          
-          <hr className="mt-2"></hr>
-          <p className="py-12">
-            Dungeons & Dragons (commonly abbreviated as D&D or DnD) is a fantasy tabletop role-playing game (RPG) 
-            originally created and designed by Gary Gygax and Dave Arneson. The game was first published in 1974
-            by Tactical Studies Rules, Inc. (TSR). It has been published by Wizards of the Coast, now a subsidiary of
-            Hasbro, since 1997. The game was derived from miniature wargames, with a variation of the 1971 game Chainmail
-            serving as the initial rule system. D&D&apos;s publication is commonly recognized as the beginning of modern role-playing
-            games and the role-playing game industry, and also deeply influenced video games, especially the 
-            role-playing video game genre.
-          </p>
-          <ul>
-            <li><b>Sistema:</b> d20</li>
-            <li><b>Última edição:</b> 5 edição</li>
-            <li><b>Ano de publicação:</b> 1974</li>
-            <li><b>Número de jogadores:</b> 2-12</li>
-          </ul>
-        </div>
+    <main className="w-screen h-screen flex">
+      <div className="flex items-center justify-center">
+        <CardExpanded />
       </div>
     </main>
   );
