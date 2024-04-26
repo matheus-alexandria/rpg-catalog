@@ -31,7 +31,7 @@ export default function CardExpanded() {
 
         <b>Como começar a jogar?</b>
         <p className="mb-8">
-          Para jogar uma sessão de Dungeons & Dragons é necessário de um mínimo de duas pessoas, uma para ser o "mestre"
+          Para jogar uma sessão de Dungeons & Dragons é necessário de um mínimo de duas pessoas, uma para ser o &quot;mestre&quot;
           e outra para ser um jogador. O mestre é como um narrador de história, ele dita o que está acontecendo em cada
           etapa do jogo e os jogadores agem para dar continuidade a história, indicando o que querem fazer para o mestre
           enquanto ele narra as consequências de cada ação feita pelos jogadores. É importante que os jogadores tenham noção das
