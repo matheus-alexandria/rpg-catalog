@@ -1,13 +1,14 @@
 import Card from "@/components/Card";
-import CardExpanded from "@/components/CardExpanded";
-import Image from "next/image";
-
 
 export default function Home() {
   return (
     <main className="w-screen h-screen flex">
       <div className="flex items-center justify-center">
-        <CardExpanded />
+        <Card 
+          imagePath="/dnd_handbook.jpg"
+          title="Dungeons & Dragons"
+          rpgData={ {diceSystem: 'd20', numberOfPlayers: 'Mínimo 2'}}
+        ></Card>
       </div>
     </main>
   );
