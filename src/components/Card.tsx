@@ -1,5 +1,6 @@
+'use client'
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface CardProps {
   title: string;
@@ -11,10 +12,12 @@ interface CardProps {
 }
 
 export default function Card({ title, imagePath, rpgData }: CardProps) {
+  const router = useRouter();
   const imageSize = 150;
   return (
     <div 
-      className="w-[15%] rounded-md flex flex-col items-center justify-between gap-3 p-5 m-3 bg-stone-950"
+      className="w-[100%] rounded-md flex flex-col items-center justify-between gap-3 p-5 m-3 bg-stone-950"
+      onClick={() => router.push('/card')}
     >
       <div className="flex flex-col items-center justify-start gap-2">
         <Image
