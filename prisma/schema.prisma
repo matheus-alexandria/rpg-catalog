@@ -16,6 +16,8 @@ datasource db {
 model Game {
   id String @id @default(uuid())
   title String
+  description String
+  cover_path String?
 
   @@map("games")
 }
