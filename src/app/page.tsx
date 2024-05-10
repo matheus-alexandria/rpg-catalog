@@ -1,14 +1,36 @@
+'use client';
 import Card from "@/components/Card";
+import { useEffect, useState } from "react";
+
+type IGameData = {
+  id: string;
+  title: string;
+  description: string;
+  cover_path: string;
+}
 
 export default function Home() {
+  const [cards, setCards] = useState<IGameData[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3500/api/v1/games')
+    .then((res) => res.json())
+    .then((data: IGameData[]) => {
+      setCards(data);
+    });
+  }, []);
+
   return (
     <main className="w-screen h-screen flex">
       <div className="flex items-center justify-center">
-        <Card 
-          imagePath="/dnd_handbook.jpg"
-          title="Dungeons & Dragons"
-          rpgData={ {diceSystem: 'd20', numberOfPlayers: 'Mínimo 2'}}
-        ></Card>
+        {cards.map((element: IGameData) => (
+          <Card 
+            key={element.id}
+            imagePath={element.cover_path}
+            title={element.title}
+            rpgData={ {diceSystem: 'd20', numberOfPlayers: 'Mínimo 2'}}
+          />
+        ))}
       </div>
     </main>
   );
