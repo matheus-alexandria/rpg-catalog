@@ -7,7 +7,8 @@ interface CardProps {
   imagePath: string;
   rpgData: {
     diceSystem: string;
-    numberOfPlayers: string;
+    theme: string;
+    focus: string;
   }
 }
 
@@ -32,7 +33,8 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
 
       <div className="flex gap-5">
         <span>{rpgData.diceSystem}</span>
-        <span>{rpgData.numberOfPlayers}</span>
+        <span>{rpgData.theme}</span>
+        <span>{rpgData.focus}</span>
       </div>
     </div>
   )

@@ -7,6 +7,9 @@ type IGameData = {
   title: string;
   description: string;
   cover_path: string;
+  theme: string;
+  gameplay_focus: string;
+  dice: string;
 }
 
 export default function Home() {
@@ -28,7 +31,7 @@ export default function Home() {
             key={element.id}
             imagePath={element.cover_path}
             title={element.title}
-            rpgData={ {diceSystem: 'd20', numberOfPlayers: 'Mínimo 2'}}
+            rpgData={{ diceSystem: element.dice, focus: element.gameplay_focus, theme: element.theme }}
           />
         ))}
       </div>
