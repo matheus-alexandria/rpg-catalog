@@ -17,6 +17,9 @@ model Game {
   id String @id @default(uuid())
   title String
   description String
+  theme String?
+  gameplay_focus String?
+  dice String?
   cover_path String?
 
   @@map("games")
