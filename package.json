@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "sudo docker compose up -d",
     "dev": "next dev -p 3500",
     "build": "next build",
     "start": "next start",
