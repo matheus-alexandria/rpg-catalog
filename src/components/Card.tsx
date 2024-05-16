@@ -14,22 +14,21 @@ interface CardProps {
 
 export default function Card({ title, imagePath, rpgData }: CardProps) {
   const router = useRouter();
-  const imageSize = 150;
+  const imageSize = 250;
   return (
     <div 
-      className="w-[100%] rounded-md flex flex-col items-center justify-between gap-3 p-5 m-3 bg-stone-950"
+      className="w-[100%] rounded-lg flex flex-col items-center justify-between gap-3 m-3 bg-stone-950"
       onClick={() => router.push('/card')}
     >
-      <div className="flex flex-col items-center justify-start gap-2">
-        <Image
-          src={imagePath}
-          alt='DnD Players Handbook cover'
-          width={imageSize}
-          height={imageSize}
-        />
-        
-        <b className="text-xl text-center font-serif">{title}</b>
-      </div>
+      <Image
+        src={imagePath}
+        className="rounded-t-lg"
+        alt='DnD Players Handbook cover'
+        width={imageSize}
+        height={imageSize}
+      />
+
+      <b className="text-lg text-center font-serif">{title}</b>
 
       <div className="flex gap-5">
         <span>{rpgData.diceSystem}</span>

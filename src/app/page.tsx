@@ -24,8 +24,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="w-screen h-screen flex">
-      <div className="flex items-center justify-center">
+    <main className="w-screen h-screen flex justify-center items-center">
+      <div className="flex items-start justify-center h-1/2 gap-10">
         {cards.map((element: IGameData) => (
           <Card 
             key={element.id}
