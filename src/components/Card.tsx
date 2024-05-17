@@ -34,16 +34,16 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
       <div className="flex flex-col items-center gap-2">
         <div className="flex gap-5">
           <span className="flex gap-1">
-            <Image priority src={icons.d20} width={20} height={20} />
+            <Image priority src={icons.d20} width={20} height={20} alt='20 sided dice icon' />
             {rpgData.diceSystem}
           </span>
           <span className="flex gap-1">
-            <Image priority src={icons.bookCover} width={20} height={20} />
+            <Image priority src={icons.bookCover} width={20} height={20} alt='Book cover icon' />
             {rpgData.theme}
           </span>
         </div>
         <span className="flex gap-1">
-          <Image priority src={icons.trailPath} width={20} height={20} />
+          <Image priority src={icons.trailPath} width={20} height={20} alt='Trail path icon' />
           {rpgData.focus}
         </span>
       </div>
