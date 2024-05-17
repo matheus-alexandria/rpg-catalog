@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import d20Icon from "../../public/icons/dice-twenty-faces-twenty.svg";
+import { icons } from "../../public/icons";
 
 interface CardProps {
   title: string;
@@ -18,7 +18,7 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
   const imageSize = 250;
   return (
     <div 
-      className="w-[100%] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-stone-950"
+      className="h-[30rem] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-stone-950"
       onClick={() => router.push('/card')}
     >
       <Image
@@ -31,13 +31,21 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
 
       <b className="text-xl text-center font-serif">{title}</b>
 
-      <div className="flex gap-5">
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex gap-5">
+          <span className="flex gap-1">
+            <Image priority src={icons.d20} width={20} height={20} />
+            {rpgData.diceSystem}
+          </span>
+          <span className="flex gap-1">
+            <Image priority src={icons.bookCover} width={20} height={20} />
+            {rpgData.theme}
+          </span>
+        </div>
         <span className="flex gap-1">
-          <Image priority src={d20Icon} width={20} height={20} />
-          {rpgData.diceSystem}
+          <Image priority src={icons.trailPath} width={20} height={20} />
+          {rpgData.focus}
         </span>
-        <span>{rpgData.theme}</span>
-        <span>{rpgData.focus}</span>
       </div>
     </div>
   )
