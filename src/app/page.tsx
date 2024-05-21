@@ -26,11 +26,11 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="w-screen h-screen flex justify-center items-center">
-      <header className="flex">
-        <Image src={logo} width={200} height={200} alt='Shield and sword with "Catálogo RPGs" written under it' />
+    <main className="w-screen h-screen">
+      <header className="p-7">
+        <Image src={logo} width={120} height={120} alt='Shield and sword with "Catálogo RPGs" written under it' />
       </header>
-      <div className="flex items-start justify-center h-1/2 gap-12">
+      <div className="flex items-start justify-center h-1/2 gap-12 mt-5">
         {cards.map((element: IGameData) => (
           <Card 
             key={element.id}
