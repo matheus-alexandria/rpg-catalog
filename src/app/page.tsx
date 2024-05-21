@@ -1,5 +1,7 @@
 'use client';
 import Card from "@/components/Card";
+import Image from "next/image";
+import logo from '../../public/logoBlack.png';
 import { useEffect, useState } from "react";
 
 type IGameData = {
@@ -25,6 +27,9 @@ export default function Home() {
 
   return (
     <main className="w-screen h-screen flex justify-center items-center">
+      <header className="flex">
+        <Image src={logo} width={200} height={200} alt='Shield and sword with "Catálogo RPGs" written under it' />
+      </header>
       <div className="flex items-start justify-center h-1/2 gap-12">
         {cards.map((element: IGameData) => (
           <Card 
