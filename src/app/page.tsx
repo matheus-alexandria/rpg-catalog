@@ -39,8 +39,12 @@ export default function Home() {
             rpgData={{ diceSystem: element.dice, focus: element.gameplay_focus, theme: element.theme }}
           />
         ))}
-        <div className="h-[28rem] w-[14rem] rounded-lg flex flex-col items-center justify-center bg-stone-800">
-          <span className="text-4xl">+</span>
+        <div className="h-full w-[8rem] rounded-lg flex items-center justify-center">
+          <span 
+            className="text-4xl h-[20%] w-[70%] rounded-lg flex items-center justify-center hover:bg-stone-700 bg-stone-800 transition-colors"
+          >
+            +
+          </span>
         </div>
       </div>
     </main>
