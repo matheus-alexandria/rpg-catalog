@@ -3,6 +3,7 @@ import Card from "@/components/Card";
 import Image from "next/image";
 import logo from '../../public/logoBlack.png';
 import { useEffect, useState } from "react";
+import AddGameModal from "@/components/AddGameModal";
 
 type IGameData = {
   id: string;
@@ -16,6 +17,8 @@ type IGameData = {
 
 export default function Home() {
   const [cards, setCards] = useState<IGameData[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  console.log(isModalOpen);
 
   useEffect(() => {
     fetch('http://localhost:3500/api/v1/games')
@@ -27,6 +30,7 @@ export default function Home() {
 
   return (
     <main className="w-screen h-screen">
+      {isModalOpen && <AddGameModal />}
       <header className="p-7">
         <Image src={logo} width={120} height={120} alt='Shield and sword with "Catálogo RPGs" written under it' />
       </header>
@@ -40,11 +44,12 @@ export default function Home() {
           />
         ))}
         <div className="h-full w-[8rem] rounded-lg flex items-center justify-center">
-          <span 
+          <button 
             className="text-4xl h-[20%] w-[70%] rounded-lg flex items-center justify-center hover:bg-stone-700 bg-stone-800 transition-colors"
+            onClick={() => setIsModalOpen(!isModalOpen)}
           >
             +
-          </span>
+          </button>
         </div>
       </div>
     </main>
