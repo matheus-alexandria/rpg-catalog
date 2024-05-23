@@ -1,3 +1,11 @@
+/* 
+text: #f3e0fa
+background: #12041a
+primary: #c784eb
+secondary: #879117
+accent: #5be143
+*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
