@@ -45,7 +45,7 @@ export default function Home() {
         ))}
         <div className="h-full w-[8rem] rounded-lg flex items-center justify-center">
           <button 
-            className="text-4xl h-[20%] w-[70%] rounded-lg flex items-center justify-center hover:bg-stone-700 bg-stone-800 transition-colors"
+            className="text-4xl text-catalog-white h-[20%] w-[70%] rounded-lg flex items-center justify-center hover:bg-slate-700 bg-slate-800 transition-colors"
             onClick={() => setIsModalOpen(!isModalOpen)}
           >
             +

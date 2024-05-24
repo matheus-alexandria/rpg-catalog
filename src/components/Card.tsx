@@ -18,7 +18,7 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
   const imageSize = 250;
   return (
     <div 
-      className="h-[30rem] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-stone-950"
+      className="h-[30rem] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-slate-800"
       onClick={() => router.push('/card')}
     >
       <Image
@@ -29,7 +29,7 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
         height={imageSize}
       />
 
-      <b className="text-xl text-center font-serif">{title}</b>
+      <b className="text-2xl text-center font-serif">{title}</b>
 
       <div className="flex flex-col items-center gap-2">
         <div className="flex gap-5">
