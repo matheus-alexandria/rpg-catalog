@@ -18,7 +18,6 @@ type IGameData = {
 export default function Home() {
   const [cards, setCards] = useState<IGameData[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  console.log(isModalOpen);
 
   useEffect(() => {
     fetch('http://localhost:3500/api/v1/games')
