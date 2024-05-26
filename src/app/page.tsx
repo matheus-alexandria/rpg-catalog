@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <main className="w-screen h-screen">
-      {isModalOpen && <AddGameModal />}
+      {isModalOpen && <AddGameModal setOpenModal={setIsModalOpen} />}
       <header className="p-7">
         <Image src={logo} width={120} height={120} alt='Shield and sword with "Catálogo RPGs" written under it' />
       </header>
