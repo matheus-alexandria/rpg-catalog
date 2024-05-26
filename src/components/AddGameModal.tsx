@@ -11,6 +11,18 @@ export default function AddGameModal(props: AddGameModalProps) {
 
   function sendFormData(event: FormEvent) {
     event.preventDefault();
+    fetch(`/api/v1/games`, {
+      method: 'POST', 
+      body: JSON.stringify({
+        title: game,
+        description,
+        dice,
+        theme,
+        gameplay_focus: gameplayFocus
+      }) 
+    })
+    .then((res) => res.json())
+    .then((data) => console.log(data));
   }
 
   return (
@@ -41,8 +53,9 @@ export default function AddGameModal(props: AddGameModalProps) {
         <div className="flex flex-col gap-1">
           <p className="text-lg">Qual o dado principal utilizado?</p>
           <select 
-            className="p-2 text-catalog-dark rounded-sm" 
+            className="p-2 text-catalog-dark rounded-sm"
             defaultValue={"d20"}
+            onChange={(e) => setDice(e.target.value)}
           >
             <option value="d100">D100</option>
             <option value="d20">D20</option>

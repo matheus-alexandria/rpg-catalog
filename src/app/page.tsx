@@ -20,7 +20,7 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch('http://localhost:3500/api/v1/games')
+    fetch(`/api/v1/games`)
     .then((res) => res.json())
     .then((data: IGameData[]) => {
       setCards(data);
