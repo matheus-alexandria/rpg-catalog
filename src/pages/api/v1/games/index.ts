@@ -9,7 +9,14 @@ export default async function games(request: NextApiRequest, response: NextApiRe
   }
 
   if (request.method === 'POST') {
-    const { title, description, dice, theme, gameplay_focus } = request.body;
+    const { 
+      title,
+      description,
+      dice,
+      theme,
+      gameplay_focus
+    } = JSON.parse(request.body);
+
     const game = await prisma.game.create({ 
       data: {
         title,

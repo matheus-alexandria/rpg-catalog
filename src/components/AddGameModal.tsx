@@ -5,7 +5,7 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 export default function AddGameModal(props: AddGameModalProps) {
   const [game, setGame] = useState('');
   const [description, setDescription] = useState('');
-  const [dice, setDice] = useState('');
+  const [dice, setDice] = useState('d20');
   const [theme, setTheme] = useState('');
   const [gameplayFocus, setGameplayFocus] = useState('');
 
@@ -19,7 +19,7 @@ export default function AddGameModal(props: AddGameModalProps) {
         dice,
         theme,
         gameplay_focus: gameplayFocus
-      }) 
+      })
     })
     .then((res) => res.json())
     .then((data) => console.log(data));
@@ -54,7 +54,7 @@ export default function AddGameModal(props: AddGameModalProps) {
           <p className="text-lg">Qual o dado principal utilizado?</p>
           <select 
             className="p-2 text-catalog-dark rounded-sm"
-            defaultValue={"d20"}
+            defaultValue={dice}
             onChange={(e) => setDice(e.target.value)}
           >
             <option value="d100">D100</option>
