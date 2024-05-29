@@ -5,7 +5,7 @@ import { icons } from "../../public/icons";
 
 interface CardProps {
   title: string;
-  imagePath: string;
+  imagePath?: string;
   rpgData: {
     diceSystem: string;
     theme: string;
@@ -18,16 +18,20 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
   const imageSize = 250;
   return (
     <div 
-      className="h-[30rem] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-slate-800"
+      className="h-[30rem] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
       onClick={() => router.push('/card')}
     >
-      <Image
-        src={imagePath}
-        className="rounded-t-lg"
-        alt='DnD Players Handbook cover'
-        width={imageSize}
-        height={imageSize}
-      />
+      {imagePath ? (
+        <Image
+          src={imagePath}
+          className="rounded-t-lg"
+          alt='DnD Players Handbook cover'
+          width={imageSize}
+          height={imageSize}
+        />
+      ) : (
+        <div className={`h-[340px] w-[220px] bg-catalog-secondary`}></div>
+      )}
 
       <b className="text-2xl text-center font-serif">{title}</b>
 
