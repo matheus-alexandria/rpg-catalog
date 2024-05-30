@@ -11,7 +11,7 @@ export default function AddGameModal(props: AddGameModalProps) {
 
   function sendFormData(event: FormEvent) {
     event.preventDefault();
-    fetch(`/api/v1/games`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/games`, {
       method: 'POST', 
       body: JSON.stringify({
         title: game,
