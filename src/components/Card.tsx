@@ -17,8 +17,9 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
   const router = useRouter();
   const imageSize = 250;
   return (
-    <div
-      className="h-[30rem] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
+    <button
+      className="h-[30rem] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-slate-800 hover:bg-slate-700 transition-colors "
+      type="button"
       onClick={() => router.push('/card')}
     >
       {imagePath ? (
@@ -30,7 +31,7 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
           height={imageSize}
         />
       ) : (
-        <div className={'h-[340px] w-[220px] bg-catalog-secondary'} />
+        <div className={'h-[340px] w-[220px] bg-catalog-secondary rounded-t-lg'} />
       )}
 
       <b className="text-2xl text-center font-serif">{title}</b>
@@ -51,6 +52,6 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
           {rpgData.focus}
         </span>
       </div>
-    </div>
+    </button>
   );
 }
