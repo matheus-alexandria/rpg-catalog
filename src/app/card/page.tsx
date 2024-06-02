@@ -1,7 +1,5 @@
-import CardExpanded from "@/components/CardExpanded";
+import CardExpanded from '@/components/CardExpanded';
 
 export default function CardPage() {
-  return (
-    <CardExpanded/>
-  )
+  return <CardExpanded />;
 }
