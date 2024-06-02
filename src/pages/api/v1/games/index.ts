@@ -1,5 +1,5 @@
-import { prisma } from "@/utils/prisma";
-import { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from '@/utils/prisma';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function games(request: NextApiRequest, response: NextApiResponse) {
   if (request.method === 'GET') {
@@ -9,15 +9,9 @@ export default async function games(request: NextApiRequest, response: NextApiRe
   }
 
   if (request.method === 'POST') {
-    const { 
-      title,
-      description,
-      dice,
-      theme,
-      gameplay_focus
-    } = JSON.parse(request.body);
+    const { title, description, dice, theme, gameplay_focus } = JSON.parse(request.body);
 
-    const game = await prisma.game.create({ 
+    const game = await prisma.game.create({
       data: {
         title,
         description,
@@ -30,5 +24,5 @@ export default async function games(request: NextApiRequest, response: NextApiRe
     return response.status(201).json(game);
   }
 
-  return response.status(400).json({ message: 'Nenhum método encontrado'});
+  return response.status(400).json({ message: 'Nenhum método encontrado' });
 }
