@@ -31,7 +31,7 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
           height={imageSize}
         />
       ) : (
-        <div className={'h-[340px] w-[220px] bg-catalog-secondary rounded-t-lg'} />
+        <div className={'h-[340px] w-full bg-catalog-secondary rounded-t-lg'} />
       )}
 
       <b className="text-2xl text-center font-serif">{title}</b>

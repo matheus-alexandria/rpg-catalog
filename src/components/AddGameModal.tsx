@@ -1,5 +1,6 @@
 'use client';
 
+import { IGameData } from '@/types/IGameData';
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 
 export default function AddGameModal(props: AddGameModalProps) {
@@ -8,6 +9,14 @@ export default function AddGameModal(props: AddGameModalProps) {
   const [dice, setDice] = useState('d20');
   const [theme, setTheme] = useState('');
   const [gameplayFocus, setGameplayFocus] = useState('');
+
+  function validateForm(): boolean {
+    if (game.length === 0 && game.length > 50) {
+      return false;
+    }
+
+    return true;
+  }
 
   function sendFormData(event: FormEvent) {
     event.preventDefault();
@@ -22,7 +31,10 @@ export default function AddGameModal(props: AddGameModalProps) {
       })
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        props.addCard(data);
+        props.setOpenModal(false);
+      });
   }
 
   return (
@@ -103,4 +115,5 @@ export default function AddGameModal(props: AddGameModalProps) {
 
 type AddGameModalProps = {
   setOpenModal: Dispatch<SetStateAction<boolean>>;
+  addCard: (card: IGameData) => void;
 };
