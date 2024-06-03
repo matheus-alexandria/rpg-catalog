@@ -35,7 +35,7 @@ export default function Home() {
           alt='Shield and sword with "Catálogo RPGs" written under it'
         />
       </header>
-      <div className="flex items-start justify-center h-1/2 gap-12 mt-5 mx-auto">
+      <div className="flex items-start justify-center gap-12 mt-5 mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
           {cards.map((element: IGameData) => (
             <Card
@@ -49,7 +49,7 @@ export default function Home() {
               }}
             />
           ))}
-          <div className="h-full w-[8rem] rounded-lg flex items-center justify-center">
+          <div className="h-[30rem] w-[8rem] rounded-lg flex items-center justify-center">
             <button
               className="text-4xl text-white h-[20%] w-[70%] rounded-lg flex items-center justify-center hover:bg-slate-700 bg-slate-800 transition-colors"
               type="button"
@@ -60,6 +60,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <footer className="h-20" />
     </main>
   );
 }

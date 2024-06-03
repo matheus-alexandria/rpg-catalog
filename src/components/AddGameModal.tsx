@@ -14,12 +14,23 @@ export default function AddGameModal(props: AddGameModalProps) {
     if (game.length === 0 && game.length > 50) {
       return false;
     }
+    if (description.length === 0) {
+      return false;
+    }
+    if (theme.length === 0 && theme.length > 50) {
+      return false;
+    }
+    if (gameplayFocus.length === 0 && gameplayFocus.length > 50) {
+      return false;
+    }
 
     return true;
   }
 
   function sendFormData(event: FormEvent) {
     event.preventDefault();
+    if (!validateForm()) return;
+
     fetch('/api/v1/games', {
       method: 'POST',
       body: JSON.stringify({
