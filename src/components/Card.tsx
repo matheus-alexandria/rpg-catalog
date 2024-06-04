@@ -31,7 +31,7 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
           height={4 * imageMultiplier}
         />
       ) : (
-        <div className={'w-[240px] h-[320px] bg-catalog-secondary rounded-t-lg'} />
+        <div className={'w-[240px] h-[320px] bg-catalog-primary rounded-t-lg'} />
       )}
 
       <b className="text-2xl text-center font-serif">{title}</b>
@@ -39,7 +39,7 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
       <div className="flex flex-col items-center gap-2">
         <div className="flex gap-5">
           <span className="flex gap-1">
-            <Image priority src={icons.d20} width={20} height={20} alt="20 sided dice icon" />
+            <Image priority src={icons.d20} width={20} height={20} alt="20 sided die icon" />
             {rpgData.diceSystem}
           </span>
           <span className="flex gap-1">
