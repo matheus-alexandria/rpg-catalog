@@ -11,16 +11,12 @@ export default function AddGameModal(props: AddGameModalProps) {
   const [gameplayFocus, setGameplayFocus] = useState('');
 
   function validateForm(): boolean {
-    if (game.length === 0 && game.length > 50) {
-      return false;
-    }
-    if (description.length === 0) {
-      return false;
-    }
-    if (theme.length === 0 && theme.length > 50) {
-      return false;
-    }
-    if (gameplayFocus.length === 0 && gameplayFocus.length > 50) {
+    if (
+      (game.length === 0 && game.length > 50) ||
+      description.length === 0 ||
+      (theme.length === 0 && theme.length > 50) ||
+      (gameplayFocus.length === 0 && gameplayFocus.length > 50)
+    ) {
       return false;
     }
 
