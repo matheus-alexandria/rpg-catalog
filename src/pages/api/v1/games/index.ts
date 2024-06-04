@@ -6,7 +6,7 @@ import { GetAllGamesUseCase } from './getAllGamesUseCase';
 export default async function games(request: NextApiRequest, response: NextApiResponse) {
   if (request.method === 'GET') {
     const getAllGamesUseCase = new GetAllGamesUseCase();
-    const games = getAllGamesUseCase.execute();
+    const games = await getAllGamesUseCase.execute();
 
     return response.status(200).json(games);
   }
@@ -15,7 +15,13 @@ export default async function games(request: NextApiRequest, response: NextApiRe
     const { title, description, dice, theme, gameplay_focus } = JSON.parse(request.body);
 
     const createGameUseCase = new CreateGameUseCase();
-    const game = createGameUseCase.execute({ title, description, dice, theme, gameplay_focus });
+    const game = await createGameUseCase.execute({
+      title,
+      description,
+      dice,
+      theme,
+      gameplay_focus
+    });
 
     return response.status(201).json(game);
   }
@@ -24,7 +30,7 @@ export default async function games(request: NextApiRequest, response: NextApiRe
     const { id } = JSON.parse(request.body);
 
     const deleteGameUseCase = new DeleteGameUseCase();
-    deleteGameUseCase.execute(id);
+    await deleteGameUseCase.execute(id);
 
     return response.status(201).json({ message: 'Jogo deletado com sucesso.' });
   }
