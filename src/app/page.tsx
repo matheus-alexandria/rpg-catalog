@@ -16,6 +16,13 @@ export default function Home() {
     setCards(currentCards);
   }
 
+  function removeCard(id: string) {
+    const currentCards = cards;
+    const cardIndex = cards.findIndex((card) => card.id === id);
+    currentCards.splice(cardIndex, 1);
+    setCards([...currentCards]);
+  }
+
   useEffect(() => {
     fetch('/api/v1/games')
       .then((res) => res.json())
@@ -40,6 +47,8 @@ export default function Home() {
           {cards.map((element: IGameData) => (
             <Card
               key={element.id}
+              id={element.id}
+              removeCard={removeCard}
               imagePath={element.cover_path}
               title={element.title}
               rpgData={{
