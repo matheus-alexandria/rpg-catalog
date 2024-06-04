@@ -35,7 +35,10 @@ export default function AddGameModal(props: AddGameModalProps) {
         dice,
         theme,
         gameplay_focus: gameplayFocus
-      })
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then((res) => res.json())
       .then((data) => {
