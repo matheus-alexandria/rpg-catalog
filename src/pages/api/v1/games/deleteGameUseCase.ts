@@ -2,10 +2,8 @@ import { prisma } from '@/utils/prisma';
 
 export class DeleteGameUseCase {
   async execute({ id }: IDeleteGameParams) {
-    prisma.game.delete({
-      where: {
-        id
-      }
+    await prisma.game.delete({
+      where: { id }
     });
   }
 }
