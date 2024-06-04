@@ -15,7 +15,7 @@ interface CardProps {
 
 export default function Card({ title, imagePath, rpgData }: CardProps) {
   const router = useRouter();
-  const imageSize = 250;
+  const imageMultiplier = 80;
   return (
     <button
       className="h-[30rem] rounded-lg flex flex-col items-center justify-between gap-3 pb-5 bg-slate-800 hover:bg-slate-700 transition-colors "
@@ -27,11 +27,11 @@ export default function Card({ title, imagePath, rpgData }: CardProps) {
           src={imagePath}
           className="rounded-t-lg"
           alt="DnD Players Handbook cover"
-          width={imageSize}
-          height={imageSize}
+          width={3 * imageMultiplier}
+          height={4 * imageMultiplier}
         />
       ) : (
-        <div className={'h-[340px] w-full bg-catalog-secondary rounded-t-lg'} />
+        <div className={'w-[240px] h-[320px] bg-catalog-secondary rounded-t-lg'} />
       )}
 
       <b className="text-2xl text-center font-serif">{title}</b>
