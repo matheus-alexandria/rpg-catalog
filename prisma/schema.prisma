@@ -24,3 +24,11 @@ model Game {
 
   @@map("games")
 }
+
+model Theme {
+  id String @id @default(uuid())
+  name String
+  description String
+
+  @@map("themes")
+}
