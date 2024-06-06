@@ -14,21 +14,35 @@ datasource db {
 }
 
 model Game {
-  id String @id @default(uuid())
-  title String
-  description String
-  theme String?
+  id             String      @id @default(uuid())
+  title          String
+  description    String
   gameplay_focus String?
-  dice String?
-  cover_path String?
+  dice           String?
+  cover_path     String?
+  GameTheme      GameTheme[]
 
   @@map("games")
 }
 
+model GameTheme {
+  id      String  @id @default(uuid())
+  is_main Boolean
+
+  theme Theme @relation(fields: [theme_id], references: [id])
+  game  Game  @relation(fields: [game_id], references: [id])
+
+  game_id  String
+  theme_id String
+
+  @@map("game_themes")
+}
+
 model Theme {
-  id String @id @default(uuid())
-  name String
+  id          String      @id @default(uuid())
+  name        String
   description String
+  GameTheme   GameTheme[]
 
   @@map("themes")
 }
