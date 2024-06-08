@@ -2,8 +2,17 @@ import { ConflictError } from '@/pages/errors';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ZodError, z } from 'zod';
 import { CreateThemeUseCase } from './createThemeUseCase';
+import { GetAllThemesUseCase } from './getAllThemesUseCase';
 
 export async function themes(request: NextApiRequest, response: NextApiResponse) {
+  if (request.method === 'GET') {
+    const getAllThemesUseCase = new GetAllThemesUseCase();
+    const themes = await getAllThemesUseCase.execute();
+
+    return response.status(200).json({
+      themes
+    });
+  }
   if (request.method === 'POST') {
     try {
       const createDataSchema = z.object({
