@@ -4,7 +4,7 @@ import { ZodError, z } from 'zod';
 import { CreateThemeUseCase } from './createThemeUseCase';
 import { GetAllThemesUseCase } from './getAllThemesUseCase';
 
-export async function themes(request: NextApiRequest, response: NextApiResponse) {
+export default async function themes(request: NextApiRequest, response: NextApiResponse) {
   if (request.method === 'GET') {
     const getAllThemesUseCase = new GetAllThemesUseCase();
     const themes = await getAllThemesUseCase.execute();
