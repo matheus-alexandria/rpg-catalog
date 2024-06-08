@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/pages/errors/NotFoundError';
+import { ConflictError } from '@/pages/errors';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ZodError, z } from 'zod';
 import { CreateThemeUseCase } from './createThemeUseCase';
@@ -25,8 +25,8 @@ export async function themes(request: NextApiRequest, response: NextApiResponse)
         });
       }
 
-      if (err instanceof NotFoundError) {
-        return response.status(404).json({
+      if (err instanceof ConflictError) {
+        return response.status(err.status).json({
           message: err.message
         });
       }

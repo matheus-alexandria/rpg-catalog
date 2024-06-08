@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/pages/errors/NotFoundError';
+import { ConflictError } from '@/pages/errors';
 import { prisma } from '@/utils/prisma';
 
 export class CreateThemeUseCase {
@@ -9,7 +9,7 @@ export class CreateThemeUseCase {
       }
     });
     if (themeFound) {
-      throw new NotFoundError('A theme with this name already exists');
+      throw new ConflictError('A theme with this name already exists');
     }
     const theme = await prisma.theme.create({
       data
