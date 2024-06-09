@@ -9,7 +9,8 @@ export default function AddGameModal(props: AddGameModalProps) {
   const [game, setGame] = useState('');
   const [description, setDescription] = useState('');
   const [dice, setDice] = useState('d20');
-  const [theme, setTheme] = useState('');
+  const [chosenThemes, setChosenThemes] = useState<string[]>([]);
+  const [themeElements, setThemeElements] = useState<HTMLButtonElement[]>([]);
   const [gameplayFocus, setGameplayFocus] = useState('');
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
@@ -17,7 +18,7 @@ export default function AddGameModal(props: AddGameModalProps) {
     if (
       (game.length === 0 && game.length > 50) ||
       description.length === 0 ||
-      (theme.length === 0 && theme.length > 50) ||
+      (chosenThemes.length === 0 && chosenThemes.length > 10) ||
       (gameplayFocus.length === 0 && gameplayFocus.length > 50)
     ) {
       return false;
@@ -31,6 +32,12 @@ export default function AddGameModal(props: AddGameModalProps) {
     setHighlighted(buttonIndex);
   }
 
+  function addChosenTheme(theme: string) {
+    const curThemes = chosenThemes;
+    curThemes.push(theme);
+    setChosenThemes([...curThemes]);
+  }
+
   function sendFormData(event: FormEvent) {
     event.preventDefault();
     if (!validateForm()) return;
@@ -41,7 +48,7 @@ export default function AddGameModal(props: AddGameModalProps) {
         title: game,
         description,
         dice,
-        theme,
+        themes: chosenThemes,
         gameplay_focus: gameplayFocus
       }),
       headers: {
@@ -112,15 +119,22 @@ export default function AddGameModal(props: AddGameModalProps) {
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-lg">Escolha um ou mais temas que se encaixem esse RPG</p>
-          <div className="bg-white rounded-md p-2">
-            <button
-              type="button"
-              className="bg-purple-600 rounded-md py-1 px-3 hover:bg-purple-400 transition-colors"
-            >
-              fantasia
-            </button>
+          <div className="bg-white rounded-sm min-h-9">
+            {chosenThemes.map((chosenTheme) => (
+              <button
+                key={`chosen-${chosenTheme}`}
+                type="button"
+                className="bg-purple-600 rounded-md my-2 mx-1 py-1 px-3 hover:bg-purple-400 transition-colors"
+              >
+                {chosenTheme}
+              </button>
+            ))}
           </div>
-          <select className="flex items-start gap-3" onChange={(e) => console.log(e.target.value)}>
+          <select
+            className="flex items-start gap-3 text-catalog-dark rounded-sm p-1"
+            defaultValue={'Adicionar novo tema'}
+            onChange={(e) => addChosenTheme(e.target.value)}
+          >
             {themeTags.map((theme) => (
               <option key={theme.id} value={theme.name}>
                 {theme.name}
