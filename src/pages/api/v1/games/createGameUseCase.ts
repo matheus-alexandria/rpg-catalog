@@ -31,6 +31,13 @@ export class CreateGameUseCase {
           }
         },
         gameplay_focus
+      },
+      include: {
+        GameTheme: {
+          include: {
+            theme: { select: { name: true } }
+          }
+        }
       }
     });
 
