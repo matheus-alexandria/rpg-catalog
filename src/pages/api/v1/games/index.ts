@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { z } from 'zod';
 import { CreateGameUseCase } from './createGameUseCase';
 import { DeleteGameUseCase } from './deleteGameUseCase';
 import { GetAllGamesUseCase } from './getAllGamesUseCase';
@@ -12,14 +13,23 @@ export default async function games(request: NextApiRequest, response: NextApiRe
   }
 
   if (request.method === 'POST') {
-    const { title, description, dice, theme, gameplay_focus } = request.body;
+    const createGameSchema = z.object({
+      title: z.string().min(1),
+      description: z.string().min(1),
+      dice: z.string().min(1),
+      themes: z.array(z.string()).min(1),
+      gameplay_focus: z.string().min(1)
+    });
+    const { title, description, dice, themes, gameplay_focus } = createGameSchema.parse(
+      request.body
+    );
 
     const createGameUseCase = new CreateGameUseCase();
     const game = await createGameUseCase.execute({
       title,
       description,
       dice,
-      theme,
+      themes,
       gameplay_focus
     });
 
