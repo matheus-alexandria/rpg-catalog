@@ -1,14 +1,17 @@
 'use client';
 
 import { IGameData } from '@/types/IGameData';
-import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import { IThemeData } from '@/types/IThemeData';
+import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
 
 export default function AddGameModal(props: AddGameModalProps) {
+  const [themeTags, setThemeTags] = useState<IThemeData[]>([]);
   const [game, setGame] = useState('');
   const [description, setDescription] = useState('');
   const [dice, setDice] = useState('d20');
   const [theme, setTheme] = useState('');
   const [gameplayFocus, setGameplayFocus] = useState('');
+  const [highlighted, setHighlighted] = useState<number | null>(null);
 
   function validateForm(): boolean {
     if (
@@ -21,6 +24,11 @@ export default function AddGameModal(props: AddGameModalProps) {
     }
 
     return true;
+  }
+
+  function setFocus(focus: string, buttonIndex: number) {
+    setGameplayFocus(focus);
+    setHighlighted(buttonIndex);
   }
 
   function sendFormData(event: FormEvent) {
@@ -46,6 +54,14 @@ export default function AddGameModal(props: AddGameModalProps) {
         props.setOpenModal(false);
       });
   }
+
+  useEffect(() => {
+    fetch('/api/v1/themes')
+      .then((res) => res.json())
+      .then((data: { themes: IThemeData[] }) => {
+        setThemeTags(data.themes);
+      });
+  }, []);
 
   return (
     <div className="absolute w-[44rem] left-[31%] top-[14%] bg-slate-900 px-8 py-6 rounded-lg">
@@ -79,7 +95,7 @@ export default function AddGameModal(props: AddGameModalProps) {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <p className="text-lg">Qual o dado principal utilizado?</p>
+          <p className="text-lg">Qual o principal dado utilizado?</p>
           <select
             className="p-2 text-catalog-dark rounded-sm"
             defaultValue={dice}
@@ -94,26 +110,43 @@ export default function AddGameModal(props: AddGameModalProps) {
             <option value="d4">D4</option>
           </select>
         </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-lg">Qual o tema principal desse RPG?</p>
-          <input
-            type="text"
-            className="p-2 rounded-sm text-catalog-dark placeholder:text-catalog-dark placeholder:text-opacity-70"
-            placeholder="Fantasia"
-            onChange={(e) => setTheme(e.target.value)}
-          />
+        <div className="flex flex-col gap-2">
+          <p className="text-lg">Escolha um ou mais temas que se encaixem esse RPG</p>
+          <div className="bg-white rounded-md p-2">
+            <button
+              type="button"
+              className="bg-purple-600 rounded-md py-1 px-3 hover:bg-purple-400 transition-colors"
+            >
+              fantasia
+            </button>
+          </div>
+          <select className="flex items-start gap-3" onChange={(e) => console.log(e.target.value)}>
+            {themeTags.map((theme) => (
+              <option key={theme.id} value={theme.name}>
+                {theme.name}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-lg">Qual o foco do jogo?</p>
-          <input
-            type="text"
-            className="p-2 rounded-sm text-catalog-dark placeholder:text-catalog-dark placeholder:text-opacity-70"
-            placeholder="Ex: Roleplay, combate"
-            onChange={(e) => setGameplayFocus(e.target.value)}
-          />
+        <div className="flex flex-col gap-2">
+          <p className="text-lg">Qual o foco do sistema?</p>
+          <div className="flex gap-5">
+            {['Roleplay', 'Combate', 'Investigação'].map((focus, index) => (
+              <button
+                type="button"
+                onClick={() => setFocus(focus, index)}
+                className={` p-3 font-bold rounded-lg transition-colors ${
+                  highlighted === index ? 'bg-purple-600' : 'bg-catalog-dark hover:bg-slate-600'
+                }`}
+                key={`button-${focus}`}
+              >
+                {focus}
+              </button>
+            ))}
+          </div>
         </div>
         <button
-          className="w-1/3 rounded-lg p-2 mt-4 bg-catalog-accent text-catalog-dark font-bold hover:bg-green-400 transition-colors"
+          className="w-1/4 rounded-lg p-2 mt-4 bg-catalog-accent text-catalog-dark font-bold hover:bg-green-400 transition-colors"
           type="submit"
         >
           Criar
