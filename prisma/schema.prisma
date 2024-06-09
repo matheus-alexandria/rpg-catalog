@@ -29,8 +29,8 @@ model GameTheme {
   id      String  @id @default(uuid())
   is_main Boolean
 
-  game  Game  @relation(fields: [game_id], references: [id])
-  theme Theme @relation(fields: [theme_id], references: [id])
+  game  Game  @relation(fields: [game_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  theme Theme @relation(fields: [theme_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   game_id  String
   theme_id String
