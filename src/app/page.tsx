@@ -54,7 +54,7 @@ export default function Home() {
               rpgData={{
                 diceSystem: element.dice,
                 focus: element.gameplay_focus,
-                theme: element.theme
+                theme: element.GameTheme[0]?.theme.name
               }}
             />
           ))}
