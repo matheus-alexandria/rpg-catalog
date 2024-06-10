@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/pages/errors';
+import { NotFoundError } from '@/errors';
 import { prisma } from '@/utils/prisma';
 
 export class CreateGameUseCase {

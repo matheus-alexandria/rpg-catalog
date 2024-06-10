@@ -1,4 +1,4 @@
-import { ConflictError } from '@/pages/errors';
+import { ConflictError } from '@/errors';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ZodError, z } from 'zod';
 import { CreateThemeUseCase } from './createThemeUseCase';

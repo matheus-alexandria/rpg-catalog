@@ -1,4 +1,4 @@
-import { ConflictError } from '@/pages/errors';
+import { ConflictError } from '@/errors';
 import { prisma } from '@/utils/prisma';
 
 export class CreateThemeUseCase {
