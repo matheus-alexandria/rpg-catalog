@@ -33,8 +33,17 @@ export default function AddGameModal(props: AddGameModalProps) {
   }
 
   function addChosenTheme(theme: string) {
+    if (chosenThemes.find((chosen) => chosen === theme)) return;
     const curThemes = chosenThemes;
     curThemes.push(theme);
+    setChosenThemes([...curThemes]);
+  }
+
+  function removeChosenTheme(theme: string | null) {
+    const curThemes = chosenThemes;
+    const chosenIndex = curThemes.findIndex((chosen) => chosen === theme);
+    if (chosenIndex < 0) return;
+    curThemes.splice(chosenIndex, 1);
     setChosenThemes([...curThemes]);
   }
 
@@ -124,7 +133,8 @@ export default function AddGameModal(props: AddGameModalProps) {
               <button
                 key={`chosen-${chosenTheme}`}
                 type="button"
-                className="bg-purple-600 rounded-md my-2 mx-1 py-1 px-3 hover:bg-purple-400 transition-colors"
+                onClick={(e) => removeChosenTheme(e.currentTarget.textContent)}
+                className="bg-purple-600 rounded-md my-2 mx-1 py-1 px-3 hover:bg-red-500"
               >
                 {chosenTheme}
               </button>
