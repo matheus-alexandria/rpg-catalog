@@ -1,5 +1,6 @@
+import { NotFoundError } from '@/errors';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { z } from 'zod';
+import { ZodError, z } from 'zod';
 import { CreateGameUseCase } from './createGameUseCase';
 import { DeleteGameUseCase } from './deleteGameUseCase';
 import { GetAllGamesUseCase } from './getAllGamesUseCase';
@@ -13,27 +14,42 @@ export default async function games(request: NextApiRequest, response: NextApiRe
   }
 
   if (request.method === 'POST') {
-    const createGameSchema = z.object({
-      title: z.string().min(1),
-      description: z.string().min(1),
-      dice: z.string().min(1),
-      themes: z.array(z.string()).min(1),
-      gameplay_focus: z.string().min(1)
-    });
-    const { title, description, dice, themes, gameplay_focus } = createGameSchema.parse(
-      request.body
-    );
+    try {
+      const createGameSchema = z.object({
+        title: z.string().min(1),
+        description: z.string().min(1),
+        dice: z.string().min(1),
+        themes: z.array(z.string()).min(1),
+        gameplay_focus: z.string().min(1)
+      });
+      const { title, description, dice, themes, gameplay_focus } = createGameSchema.parse(
+        request.body
+      );
 
-    const createGameUseCase = new CreateGameUseCase();
-    const game = await createGameUseCase.execute({
-      title,
-      description,
-      dice,
-      themes,
-      gameplay_focus
-    });
+      const createGameUseCase = new CreateGameUseCase();
+      const game = await createGameUseCase.execute({
+        title,
+        description,
+        dice,
+        themes,
+        gameplay_focus
+      });
 
-    return response.status(200).json(game);
+      return response.status(200).json(game);
+    } catch (err) {
+      if (err instanceof ZodError) {
+        return response.status(422).json({
+          message: 'Incomplete or invalid data',
+          error: err.errors
+        });
+      }
+      if (err instanceof NotFoundError) {
+        return response.status(404).json({
+          message: err.message
+        });
+      }
+      throw err;
+    }
   }
 
   if (request.method === 'DELETE') {
