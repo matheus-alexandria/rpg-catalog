@@ -80,103 +80,106 @@ export default function AddGameModal(props: AddGameModalProps) {
   }, []);
 
   return (
-    <div className="absolute w-[44rem] left-[31%] top-[14%] bg-slate-900 px-8 py-6 rounded-lg">
-      <div className="flex justify-between">
-        <h2 className="text-2xl font-bold">Adicionar novo jogo</h2>
-        <button
-          className="text-2xl font-bold"
-          type="button"
-          onClick={() => props.setOpenModal(false)}
-        >
-          X
-        </button>
+    <>
+      <div className="fixed h-screen w-screen top-0 left-0 z-5 bg-black opacity-20" />
+      <div className="fixed left-[31%] top-[14%] w-[44rem] bg-slate-900 px-8 py-6 rounded-lg z-10">
+        <div className="flex justify-between">
+          <h2 className="text-2xl font-bold">Adicionar novo jogo</h2>
+          <button
+            className="text-2xl font-bold"
+            type="button"
+            onClick={() => props.setOpenModal(false)}
+          >
+            X
+          </button>
+        </div>
+        <form onSubmit={(e) => sendFormData(e)} className="flex flex-col mt-2 gap-6">
+          <div className="flex flex-col gap-1">
+            <p className="text-lg">Insira o nome do RPG de mesa:</p>
+            <input
+              type="text"
+              className="p-2 rounded-sm text-catalog-dark placeholder:text-catalog-dark placeholder:text-opacity-70"
+              placeholder="Dungeons & Dragons"
+              onChange={(e) => setGame(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="text-lg">Escreva uma breve descrição sobre ele:</p>
+            <input
+              type="text"
+              className="p-2 rounded-sm text-catalog-dark placeholder:text-catalog-dark placeholder:text-opacity-70"
+              placeholder="Jogo com foco em fantasia..."
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="text-lg">Qual o principal dado utilizado?</p>
+            <select
+              className="p-2 text-catalog-dark rounded-sm"
+              defaultValue={dice}
+              onChange={(e) => setDice(e.target.value)}
+            >
+              <option value="d100">D100</option>
+              <option value="d20">D20</option>
+              <option value="d12">D12</option>
+              <option value="d10">D10</option>
+              <option value="d8">D8</option>
+              <option value="d6">D6</option>
+              <option value="d4">D4</option>
+            </select>
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-lg">Escolha um ou mais temas que se encaixem esse RPG</p>
+            <div className="bg-white rounded-sm min-h-9">
+              {chosenThemes.map((chosenTheme) => (
+                <button
+                  key={`chosen-${chosenTheme}`}
+                  type="button"
+                  onClick={(e) => removeChosenTheme(e.currentTarget.textContent)}
+                  className="bg-purple-600 rounded-md my-2 mx-1 py-1 px-3 hover:bg-red-500"
+                >
+                  {chosenTheme}
+                </button>
+              ))}
+            </div>
+            <select
+              className="flex items-start gap-3 text-catalog-dark rounded-sm p-1"
+              defaultValue={'Adicionar novo tema'}
+              onChange={(e) => addChosenTheme(e.target.value)}
+            >
+              {themeTags.map((theme) => (
+                <option key={theme.id} value={theme.name}>
+                  {theme.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-lg">Qual o foco do sistema?</p>
+            <div className="flex gap-5">
+              {['Roleplay', 'Combate', 'Investigação'].map((focus, index) => (
+                <button
+                  type="button"
+                  onClick={() => setFocus(focus, index)}
+                  className={` p-3 font-bold rounded-lg transition-colors ${
+                    highlighted === index ? 'bg-purple-600' : 'bg-catalog-dark hover:bg-slate-600'
+                  }`}
+                  key={`button-${focus}`}
+                >
+                  {focus}
+                </button>
+              ))}
+            </div>
+          </div>
+          <button
+            className="w-1/4 rounded-lg p-2 mt-4 bg-catalog-accent text-catalog-dark font-bold hover:bg-green-400 transition-colors"
+            type="submit"
+          >
+            Criar
+          </button>
+        </form>
       </div>
-      <form onSubmit={(e) => sendFormData(e)} className="flex flex-col mt-2 gap-6">
-        <div className="flex flex-col gap-1">
-          <p className="text-lg">Insira o nome do RPG de mesa:</p>
-          <input
-            type="text"
-            className="p-2 rounded-sm text-catalog-dark placeholder:text-catalog-dark placeholder:text-opacity-70"
-            placeholder="Dungeons & Dragons"
-            onChange={(e) => setGame(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-lg">Escreva uma breve descrição sobre ele:</p>
-          <input
-            type="text"
-            className="p-2 rounded-sm text-catalog-dark placeholder:text-catalog-dark placeholder:text-opacity-70"
-            placeholder="Jogo com foco em fantasia..."
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-lg">Qual o principal dado utilizado?</p>
-          <select
-            className="p-2 text-catalog-dark rounded-sm"
-            defaultValue={dice}
-            onChange={(e) => setDice(e.target.value)}
-          >
-            <option value="d100">D100</option>
-            <option value="d20">D20</option>
-            <option value="d12">D12</option>
-            <option value="d10">D10</option>
-            <option value="d8">D8</option>
-            <option value="d6">D6</option>
-            <option value="d4">D4</option>
-          </select>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-lg">Escolha um ou mais temas que se encaixem esse RPG</p>
-          <div className="bg-white rounded-sm min-h-9">
-            {chosenThemes.map((chosenTheme) => (
-              <button
-                key={`chosen-${chosenTheme}`}
-                type="button"
-                onClick={(e) => removeChosenTheme(e.currentTarget.textContent)}
-                className="bg-purple-600 rounded-md my-2 mx-1 py-1 px-3 hover:bg-red-500"
-              >
-                {chosenTheme}
-              </button>
-            ))}
-          </div>
-          <select
-            className="flex items-start gap-3 text-catalog-dark rounded-sm p-1"
-            defaultValue={'Adicionar novo tema'}
-            onChange={(e) => addChosenTheme(e.target.value)}
-          >
-            {themeTags.map((theme) => (
-              <option key={theme.id} value={theme.name}>
-                {theme.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-lg">Qual o foco do sistema?</p>
-          <div className="flex gap-5">
-            {['Roleplay', 'Combate', 'Investigação'].map((focus, index) => (
-              <button
-                type="button"
-                onClick={() => setFocus(focus, index)}
-                className={` p-3 font-bold rounded-lg transition-colors ${
-                  highlighted === index ? 'bg-purple-600' : 'bg-catalog-dark hover:bg-slate-600'
-                }`}
-                key={`button-${focus}`}
-              >
-                {focus}
-              </button>
-            ))}
-          </div>
-        </div>
-        <button
-          className="w-1/4 rounded-lg p-2 mt-4 bg-catalog-accent text-catalog-dark font-bold hover:bg-green-400 transition-colors"
-          type="submit"
-        >
-          Criar
-        </button>
-      </form>
-    </div>
+    </>
   );
 }
 
