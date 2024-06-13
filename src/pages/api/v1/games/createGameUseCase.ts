@@ -22,7 +22,7 @@ export class CreateGameUseCase {
         title,
         description,
         dice,
-        GameTheme: {
+        game_themes: {
           createMany: {
             data: foundThemes.map((theme) => ({
               theme_id: theme.id,
@@ -33,7 +33,7 @@ export class CreateGameUseCase {
         gameplay_focus
       },
       include: {
-        GameTheme: {
+        game_themes: {
           include: {
             theme: { select: { name: true } }
           }

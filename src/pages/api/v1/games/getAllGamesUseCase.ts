@@ -4,7 +4,7 @@ export class GetAllGamesUseCase {
   async execute() {
     const games = await prisma.game.findMany({
       include: {
-        GameTheme: {
+        game_themes: {
           include: {
             theme: {
               select: { name: true }

@@ -20,7 +20,7 @@ model Game {
   gameplay_focus String?
   dice           String?
   cover_path     String?
-  GameTheme      GameTheme[]
+  game_themes    GameTheme[]
 
   @@map("games")
 }
@@ -42,7 +42,7 @@ model Theme {
   id          String      @id @default(uuid())
   name        String      @unique
   description String
-  GameTheme   GameTheme[]
+  game_themes GameTheme[]
 
   @@map("themes")
 }
