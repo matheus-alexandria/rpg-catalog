@@ -10,8 +10,8 @@ export const uploadFile = (fileContent: any, bucketName: string, key: string) =>
   const params = {
     Bucket: bucketName,
     Key: key,
-    Body: fileContent,
-    ACL: 'public-read'
+    Body: fileContent
+    // ACL: 'public-read'
   };
 
   return s3.upload(params).promise();
