@@ -7,7 +7,12 @@ export default function CardExpanded() {
   return (
     <div className="h-full m-2 flex bg-zinc-800 p-8">
       <div className="mr-8">
-        <Image src="/dnd_handbook.jpg" alt="DnD Players Handbook face cover" width={x} height={y} />
+        <Image
+          src="https://rpg-catalog-bucket.s3.amazonaws.com/upload/dnd_handbook.jpg"
+          alt="DnD Players Handbook face cover"
+          width={x}
+          height={y}
+        />
       </div>
 
       <div className="flex flex-col rounded-xl px-3">
