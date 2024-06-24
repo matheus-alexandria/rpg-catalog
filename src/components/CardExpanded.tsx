@@ -1,8 +1,7 @@
 import Image from 'next/image';
 
 export default function CardExpanded() {
-  const x = 1222;
-  const y = x / 0.76375;
+  const imageMultiplier = 600;
 
   return (
     <div className="h-full m-2 flex bg-zinc-800 p-8">
@@ -10,8 +9,8 @@ export default function CardExpanded() {
         <Image
           src="https://rpg-catalog-bucket.s3.amazonaws.com/upload/dnd_handbook.jpg"
           alt="DnD Players Handbook face cover"
-          width={x}
-          height={y}
+          width={3 * imageMultiplier}
+          height={4 * imageMultiplier}
         />
       </div>
 
