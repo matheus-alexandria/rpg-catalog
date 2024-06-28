@@ -1,4 +1,5 @@
 import { NotFoundError } from '@/errors';
+import { parseForm } from '@/utils/parseForm';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ZodError, z } from 'zod';
 import { CreateGameUseCase } from './createGameUseCase';
@@ -15,6 +16,7 @@ export default async function games(request: NextApiRequest, response: NextApiRe
 
   if (request.method === 'POST') {
     try {
+      const { parsedFields: fields, files } = await parseForm(request);
       const createGameSchema = z.object({
         title: z.string().min(1),
         description: z.string().min(1),
@@ -22,9 +24,7 @@ export default async function games(request: NextApiRequest, response: NextApiRe
         themes: z.array(z.string()).min(1),
         gameplay_focus: z.string().min(1)
       });
-      const { title, description, dice, themes, gameplay_focus } = createGameSchema.parse(
-        request.body
-      );
+      const { title, description, dice, themes, gameplay_focus } = createGameSchema.parse(fields);
 
       const createGameUseCase = new CreateGameUseCase();
       const game = await createGameUseCase.execute({
@@ -63,3 +63,9 @@ export default async function games(request: NextApiRequest, response: NextApiRe
 
   return response.status(400).json({ message: 'Nenhum método encontrado' });
 }
+
+export const config = {
+  api: {
+    bodyParser: false
+  }
+};

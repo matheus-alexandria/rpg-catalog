@@ -23,7 +23,11 @@ export async function parseForm(
 function parseFields(fields: Fields): Record<string, any> {
   const parsed: Record<string, any> = {};
   for (const [key, value] of Object.entries(fields)) {
-    if (value) {
+    if (value?.length && value.length > 1) {
+      parsed[key] = value;
+    }
+
+    if (value?.length && value.length === 1) {
       parsed[key] = value[0];
     }
   }
