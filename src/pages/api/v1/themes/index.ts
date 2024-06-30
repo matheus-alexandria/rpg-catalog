@@ -2,6 +2,7 @@ import { ConflictError } from '@/errors';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ZodError, z } from 'zod';
 import { CreateThemeUseCase } from './createThemeUseCase';
+import { DeleteThemeUseCase } from './deleteThemeUseCase';
 import { GetAllThemesUseCase } from './getAllThemesUseCase';
 
 export default async function themes(request: NextApiRequest, response: NextApiResponse) {
@@ -13,6 +14,7 @@ export default async function themes(request: NextApiRequest, response: NextApiR
       themes
     });
   }
+
   if (request.method === 'POST') {
     try {
       const createDataSchema = z.object({
@@ -43,7 +45,31 @@ export default async function themes(request: NextApiRequest, response: NextApiR
       throw err;
     }
   }
-  return response.status(400).json({
+
+  if (request.method === 'DELETE') {
+    try {
+      const deleteThemeSchema = z.object({
+        id: z.string().uuid()
+      });
+      const { id } = deleteThemeSchema.parse(request.body);
+      const deleteThemeUseCase = new DeleteThemeUseCase();
+      await deleteThemeUseCase.execute({ id });
+
+      return response.status(202).json({
+        message: 'Tema deletado com sucesso.'
+      });
+    } catch (err) {
+      if (err instanceof ZodError) {
+        return response.status(422).json({
+          message: 'Incomplete or invalid data',
+          error: err.errors
+        });
+      }
+
+      throw err;
+    }
+  }
+  return response.status(404).json({
     message: 'No method was found'
   });
 }
