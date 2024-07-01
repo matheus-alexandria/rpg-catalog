@@ -63,9 +63,3 @@ export default async function games(request: NextApiRequest, response: NextApiRe
 
   return response.status(400).json({ message: 'Nenhum método encontrado' });
 }
-
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
