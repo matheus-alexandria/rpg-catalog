@@ -53,12 +53,26 @@ export default async function games(request: NextApiRequest, response: NextApiRe
   }
 
   if (request.method === 'DELETE') {
-    const { id } = request.body;
+    try {
+      const deleteGameSchema = z.object({
+        id: z.string().uuid()
+      });
+      const { id } = deleteGameSchema.parse(request.body);
 
-    const deleteGameUseCase = new DeleteGameUseCase();
-    await deleteGameUseCase.execute({ id });
+      const deleteGameUseCase = new DeleteGameUseCase();
+      await deleteGameUseCase.execute({ id });
 
-    return response.status(201).json({ message: 'Jogo deletado com sucesso.' });
+      return response.status(201).json({ message: 'Jogo deletado com sucesso.' });
+    } catch (err) {
+      if (err instanceof ZodError) {
+        return response.status(422).json({
+          message: 'Incomplete or invalid data',
+          error: err.errors
+        });
+      }
+
+      throw err;
+    }
   }
 
   return response.status(400).json({ message: 'Nenhum método encontrado' });
