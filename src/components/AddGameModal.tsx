@@ -50,6 +50,7 @@ export default function AddGameModal(props: AddGameModalProps) {
   function sendFormData(event: FormEvent) {
     event.preventDefault();
     if (!validateForm()) return;
+    const form = createForm();
 
     fetch('/api/v1/games', {
       method: 'POST',
@@ -69,6 +70,12 @@ export default function AddGameModal(props: AddGameModalProps) {
         props.addCard(data);
         props.setOpenModal(false);
       });
+  }
+
+  function createForm() {
+    const form = new FormData();
+    form.append('title', game);
+    return form;
   }
 
   useEffect(() => {
