@@ -14,19 +14,6 @@ export default function AddGameModal(props: AddGameModalProps) {
   const [gameplayFocus, setGameplayFocus] = useState('');
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
-  function validateForm(): boolean {
-    if (
-      (game.length === 0 && game.length > 50) ||
-      description.length === 0 ||
-      (chosenThemes.length === 0 && chosenThemes.length > 10) ||
-      (gameplayFocus.length === 0 && gameplayFocus.length > 50)
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
   function setFocus(focus: string, buttonIndex: number) {
     setGameplayFocus(focus);
     setHighlighted(buttonIndex);
@@ -52,29 +39,43 @@ export default function AddGameModal(props: AddGameModalProps) {
     if (!validateForm()) return;
     const form = createForm();
 
-    fetch('/api/v1/games', {
+    fetch('/api/v1/games/create', {
       method: 'POST',
-      body: JSON.stringify({
-        title: game,
-        description,
-        dice,
-        themes: chosenThemes,
-        gameplay_focus: gameplayFocus
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      body: form
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
       .then((data) => {
         props.addCard(data);
         props.setOpenModal(false);
       });
   }
 
+  function validateForm(): boolean {
+    if (
+      (game.length === 0 && game.length > 50) ||
+      description.length === 0 ||
+      (chosenThemes.length === 0 && chosenThemes.length > 10) ||
+      (gameplayFocus.length === 0 && gameplayFocus.length > 50)
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   function createForm() {
     const form = new FormData();
     form.append('title', game);
+    form.append('description', description);
+    form.append('dice', dice);
+    form.append('gameplay_focus', gameplayFocus);
+    for (const theme of chosenThemes) {
+      form.append('themes', theme);
+    }
     return form;
   }
 
