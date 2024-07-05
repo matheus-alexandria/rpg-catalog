@@ -34,24 +34,23 @@ export default function AddGameModal(props: AddGameModalProps) {
     setChosenThemes([...curThemes]);
   }
 
-  function sendFormData(event: FormEvent) {
+  async function sendFormData(event: FormEvent) {
     event.preventDefault();
     if (!validateForm()) return;
     const form = createForm();
 
-    fetch('/api/v1/games/create', {
+    const res = await fetch('/api/v1/games/create', {
       method: 'POST',
       body: form
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((data) => {
-        props.addCard(data);
-        props.setOpenModal(false);
-      });
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      props.addCard(data);
+      props.setOpenModal(false);
+    }
+
+    console.log(data);
   }
 
   function validateForm(): boolean {

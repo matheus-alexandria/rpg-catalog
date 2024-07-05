@@ -12,18 +12,17 @@ export default async function create(request: NextApiRequest, response: NextApiR
         title: z.string().min(1),
         description: z.string().min(1),
         dice: z.string().min(1),
-        themes: z.array(z.string()).min(1),
+        themes: z.array(z.string()).min(1).or(z.string().min(1)),
         gameplay_focus: z.string().min(1)
       });
       const { title, description, dice, themes, gameplay_focus } = createGameSchema.parse(fields);
-      console.log(themes);
 
       const createGameUseCase = new CreateGameUseCase();
       const game = await createGameUseCase.execute({
         title,
         description,
         dice,
-        themes,
+        themes: typeof themes === 'string' ? [themes] : themes,
         gameplay_focus
       });
 
