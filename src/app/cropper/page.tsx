@@ -22,6 +22,7 @@ export default function Crop() {
         initialAspectRatio={3 / 4}
         aspectRatio={3 / 4}
         guides={false}
+        viewMode={2}
         crop={onCrop}
         ref={cropperRef}
       />
