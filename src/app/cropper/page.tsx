@@ -38,11 +38,12 @@ export default function Crop() {
           <Cropper
             src={imagePath}
             style={{ height: 400 }}
-            // Cropper.js options
             initialAspectRatio={3 / 4}
             aspectRatio={3 / 4}
             guides={false}
             viewMode={2}
+            background={false}
+            modal={false}
             crop={onCrop}
             ref={cropperRef}
           />
