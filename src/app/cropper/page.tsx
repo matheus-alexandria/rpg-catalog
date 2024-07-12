@@ -12,7 +12,9 @@ export default function Crop() {
   const onCrop = () => {
     const cropper = cropperRef.current?.cropper;
     if (cropper) {
-      croppedUrl.current = cropper.getCroppedCanvas().toDataURL();
+      cropper.getCroppedCanvas().toBlob((blob) => {
+        console.log(blob);
+      });
     }
   };
   const onDrop = useCallback((acceptedFiles: File[]) => {
