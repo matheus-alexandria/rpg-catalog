@@ -52,11 +52,7 @@ export default function Crop() {
         )}
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>Drop the files here ...</p>
-          ) : (
-            <p>Drag 'n' drop some files here, or click to select files</p>
-          )}
+          {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop your files</p>}
         </div>
       </div>
     </>
