@@ -10,7 +10,6 @@ export default function AddGameModal(props: AddGameModalProps) {
   const [description, setDescription] = useState('');
   const [dice, setDice] = useState('d20');
   const [chosenThemes, setChosenThemes] = useState<string[]>([]);
-  const [themeElements, setThemeElements] = useState<HTMLButtonElement[]>([]);
   const [gameplayFocus, setGameplayFocus] = useState('');
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
@@ -49,8 +48,6 @@ export default function AddGameModal(props: AddGameModalProps) {
       props.addCard(data);
       props.setOpenModal(false);
     }
-
-    console.log(data);
   }
 
   function validateForm(): boolean {
