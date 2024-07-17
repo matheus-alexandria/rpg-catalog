@@ -1,9 +1,9 @@
-import formidable, { Fields, Files } from 'formidable';
+import formidable, { Fields, File, Files } from 'formidable';
 import { NextApiRequest } from 'next';
 
 export async function parseForm(
   req: NextApiRequest
-): Promise<{ parsedFields: Record<string, any>; files: Files }> {
+): Promise<{ parsedFields: Record<string, any>; file: File | undefined }> {
   return new Promise((resolve, rejects) => {
     const form = formidable({
       maxFiles: 1,
@@ -12,10 +12,11 @@ export async function parseForm(
 
     form.parse(req, (err: any, fields: Fields, files: Files) => {
       const parsedFields = parseFields(fields);
+      const firstFile = files?.file?.[0];
       if (err) {
         return rejects(err.message);
       }
-      resolve({ parsedFields, files });
+      resolve({ parsedFields, file: firstFile });
     });
   });
 }
