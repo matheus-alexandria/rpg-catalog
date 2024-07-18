@@ -7,7 +7,7 @@ import { CreateGameUseCase } from '../createGameUseCase';
 export default async function create(request: NextApiRequest, response: NextApiResponse) {
   if (request.method === 'POST') {
     try {
-      const { parsedFields: fields, files } = await parseForm(request);
+      const { parsedFields: fields, file } = await parseForm(request);
       const createGameSchema = z.object({
         title: z.string().min(1),
         description: z.string().min(1),
@@ -23,7 +23,8 @@ export default async function create(request: NextApiRequest, response: NextApiR
         description,
         dice,
         themes: typeof themes === 'string' ? [themes] : themes,
-        gameplay_focus
+        gameplay_focus,
+        file
       });
 
       return response.status(200).json(game);
