@@ -2,7 +2,8 @@
 
 import { IGameData } from '@/types/IGameData';
 import { IThemeData } from '@/types/IThemeData';
-import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 export default function AddGameModal(props: AddGameModalProps) {
   const [themeTags, setThemeTags] = useState<IThemeData[]>([]);
@@ -12,6 +13,26 @@ export default function AddGameModal(props: AddGameModalProps) {
   const [chosenThemes, setChosenThemes] = useState<string[]>([]);
   const [gameplayFocus, setGameplayFocus] = useState('');
   const [highlighted, setHighlighted] = useState<number | null>(null);
+  // const cropperRef = useRef<ReactCropperElement>(null);
+  // const croppedUrl = useRef<string>('');
+  const [file, setFile] = useState<File | null>(null);
+  const [imagePath, setImagePath] = useState<string | null>(null);
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+      setFile(file);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          setImagePath(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   function setFocus(focus: string, buttonIndex: number) {
     setGameplayFocus(focus);
@@ -174,6 +195,10 @@ export default function AddGameModal(props: AddGameModalProps) {
                 </button>
               ))}
             </div>
+          </div>
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop your files</p>}
           </div>
           <button
             className="w-1/4 rounded-lg p-2 mt-4 bg-catalog-accent text-catalog-dark font-bold hover:bg-green-400 transition-colors"
