@@ -198,7 +198,7 @@ export default function AddGameModal(props: AddGameModalProps) {
           </div>
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            {isDragActive ? <p>Drop your files here</p> : null}
+            {isDragActive ? <p>Arraste uma figura do RPG aqui</p> : null}
           </div>
           <button
             className="w-1/4 rounded-lg p-2 mt-4 bg-catalog-accent text-catalog-dark font-bold hover:bg-green-400 transition-colors"
