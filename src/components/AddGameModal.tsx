@@ -4,6 +4,7 @@ import { IGameData } from '@/types/IGameData';
 import { IThemeData } from '@/types/IThemeData';
 import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import ImageCropper from './ImageCropper';
 
 export default function AddGameModal(props: AddGameModalProps) {
   const [themeTags, setThemeTags] = useState<IThemeData[]>([]);
@@ -13,10 +14,9 @@ export default function AddGameModal(props: AddGameModalProps) {
   const [chosenThemes, setChosenThemes] = useState<string[]>([]);
   const [gameplayFocus, setGameplayFocus] = useState('');
   const [highlighted, setHighlighted] = useState<number | null>(null);
-  // const cropperRef = useRef<ReactCropperElement>(null);
-  // const croppedUrl = useRef<string>('');
   const [file, setFile] = useState<File | null>(null);
   const [imagePath, setImagePath] = useState<string | null>(null);
+  const form = new FormData();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -57,7 +57,7 @@ export default function AddGameModal(props: AddGameModalProps) {
   async function sendFormData(event: FormEvent) {
     event.preventDefault();
     if (!validateForm()) return;
-    const form = createForm();
+    populateForm();
 
     const res = await fetch('/api/v1/games/create', {
       method: 'POST',
@@ -84,8 +84,7 @@ export default function AddGameModal(props: AddGameModalProps) {
     return true;
   }
 
-  function createForm() {
-    const form = new FormData();
+  function populateForm() {
     form.append('title', game);
     form.append('description', description);
     form.append('dice', dice);
@@ -93,7 +92,6 @@ export default function AddGameModal(props: AddGameModalProps) {
     for (const theme of chosenThemes) {
       form.append('themes', theme);
     }
-    return form;
   }
 
   useEffect(() => {
@@ -107,7 +105,10 @@ export default function AddGameModal(props: AddGameModalProps) {
   return (
     <>
       <div className="fixed h-screen w-screen top-0 left-0 z-5 bg-black opacity-20" />
-      <div className="fixed left-[31%] top-[14%] w-[44rem] bg-slate-900 px-8 py-6 rounded-lg z-10">
+      {imagePath && (
+        <ImageCropper imagePath={imagePath} addGameForm={form} setImagePath={setImagePath} />
+      )}
+      <div className="fixed left-[31%] top-[4%] w-[44rem] bg-slate-900 px-8 py-6 rounded-lg z-10">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Adicionar novo jogo</h2>
           <button
@@ -196,9 +197,11 @@ export default function AddGameModal(props: AddGameModalProps) {
               ))}
             </div>
           </div>
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            {isDragActive ? <p>Yo</p> : <p>Arraste uma figura do RPG aqui</p>}
+          <div className="flex justify-center">
+            <div {...getRootProps()} className="p-6 border border-white border-dashed rounded-sm">
+              <input {...getInputProps()} />
+              {isDragActive ? <p>Inativa</p> : <p>Arraste uma figura do RPG aqui</p>}
+            </div>
           </div>
           <button
             className="w-1/4 rounded-lg p-2 mt-4 bg-catalog-accent text-catalog-dark font-bold hover:bg-green-400 transition-colors"
