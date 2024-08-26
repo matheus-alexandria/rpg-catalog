@@ -1,8 +1,9 @@
 'use client';
 import { useCallback, useRef, useState } from 'react';
-import { Cropper, ReactCropperElement } from 'react-cropper';
+import { ReactCropperElement } from 'react-cropper';
 import { useDropzone } from 'react-dropzone';
 import 'cropperjs/dist/cropper.css';
+import ImageCropper from '@/components/ImageCropper';
 
 export default function Crop() {
   const cropperRef = useRef<ReactCropperElement>(null);
@@ -24,7 +25,13 @@ export default function Crop() {
       reader.readAsDataURL(file);
     }
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'image/png': ['.png'],
+      'image/jpg': ['.jpg', '.jpeg']
+    }
+  });
 
   const uploadImage = useCallback(() => {
     const cropper = cropperRef.current?.cropper;
@@ -43,32 +50,18 @@ export default function Crop() {
   return (
     <>
       <div className="w-full h-screen bg-coolGray-900 flex justify-center items-center">
-        {imagePath && (
-          <div>
-            <Cropper
-              src={imagePath}
-              style={{ height: 400 }}
-              initialAspectRatio={3 / 4}
-              aspectRatio={3 / 4}
-              guides={false}
-              viewMode={2}
-              background={false}
-              modal={false}
-              ref={cropperRef}
-            />
-            <button
-              type="button"
-              className="bg-orange-400 text-white font-bold p-5"
-              onClick={() => uploadImage()}
-            >
-              Upload
-            </button>
+        {imagePath ? (
+          <ImageCropper
+            imagePath={imagePath}
+            addGameForm={new FormData()}
+            setImagePath={setImagePath}
+          />
+        ) : (
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop your files</p>}
           </div>
         )}
-        <div {...getRootProps()}>
-          <input {...getInputProps()} />
-          {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop your files</p>}
-        </div>
       </div>
     </>
   );
