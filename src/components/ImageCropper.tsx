@@ -26,26 +26,24 @@ export default function ImageCropper({ imagePath, addGameForm, setImagePath }: I
   return (
     <>
       {/* <div className="fixed h-screen w-screen top-0 left-0 z-5 bg-black opacity-20" /> */}
-      <div className="fixed z-50">
-        <Cropper
-          src={imagePath}
-          style={{ height: 400 }}
-          initialAspectRatio={3 / 4}
-          aspectRatio={3 / 4}
-          guides={false}
-          viewMode={2}
-          background={true}
-          modal={true}
-          ref={cropperRef}
-        />
-        <button
-          type="button"
-          className="bg-orange-400 text-white font-bold p-5 hover:bg-orange-500 transition-colors"
-          onClick={() => uploadImage()}
-        >
-          Recortar
-        </button>
-      </div>
+      <Cropper
+        src={imagePath}
+        style={{ paddingTop: 50, paddingBottom: 50 }}
+        initialAspectRatio={3 / 4}
+        aspectRatio={3 / 4}
+        guides={false}
+        viewMode={1}
+        background={false}
+        modal={false}
+        ref={cropperRef}
+      />
+      <button
+        type="button"
+        className="bg-orange-400 text-white font-bold p-5 hover:bg-orange-500 transition-colors"
+        onClick={() => uploadImage()}
+      >
+        Recortar
+      </button>
     </>
   );
 }
