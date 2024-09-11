@@ -41,7 +41,7 @@ export default function Card({ id, title, imagePath, rpgData, removeCard }: Card
     <button
       className="h-[30rem] max-w-[240px] rounded-lg flex flex-col items-center justify-between group gap-3 pb-5 bg-slate-800 hover:bg-slate-700 transition-colors hover:opacity-100:"
       type="button"
-      onClick={() => router.push('/card')}
+      onClick={() => router.push(`/card/${id}`)}
     >
       {imagePath ? (
         <Image
