@@ -17,12 +17,24 @@ model Game {
   id             String      @id @default(uuid())
   title          String
   description    String
+  explanation    String?
   gameplay_focus String?
   dice           String?
   cover_path     String?
   game_themes    GameTheme[]
+  Hint           Hint[]
 
   @@map("games")
+}
+
+model Hint {
+  id       String  @id @default(uuid())
+  content  String
+  question String?
+  game     Game    @relation(fields: [game_id], references: [id])
+  game_id  String
+
+  @@map("hints")
 }
 
 model GameTheme {
