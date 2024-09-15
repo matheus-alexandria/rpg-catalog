@@ -1,10 +1,9 @@
 'use client';
 import AddGameModal from '@/components/AddGameModal';
 import Card from '@/components/Card';
+import Header from '@/components/Header';
 import { IGameData } from '@/types/IGameData';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import logo from '../../public/logoBlack.png';
 
 export default function Home() {
   const [cards, setCards] = useState<IGameData[]>([]);
@@ -34,14 +33,7 @@ export default function Home() {
   return (
     <main className="w-screen h-screen">
       {isModalOpen && <AddGameModal setOpenModal={setIsModalOpen} addCard={addNewCard} />}
-      <header className="p-7">
-        <Image
-          src={logo}
-          width={120}
-          height={120}
-          alt='Shield and sword with "Catálogo RPGs" written under it'
-        />
-      </header>
+      <Header />
       <div className="flex items-start justify-center gap-12 mt-5 mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10">
           {cards.map((element: IGameData) => (
@@ -54,7 +46,7 @@ export default function Home() {
               rpgData={{
                 diceSystem: element.dice,
                 focus: element.gameplay_focus,
-                theme: element.game_themes[0]?.theme.name
+                theme: element.game_themes[0]?.theme.name || 'Sem tema'
               }}
             />
           ))}
