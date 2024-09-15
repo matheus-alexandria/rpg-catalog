@@ -14,24 +14,34 @@ export default async function games(request: NextApiRequest, response: NextApiRe
 
   if (request.method === 'PUT') {
     try {
+      console.log(request.body);
       const updateGameSchema = z.object({
+        game_id: z.string().uuid(),
         title: z.string().min(1).optional(),
         description: z.string().min(1).optional(),
         dice: z.string().min(1).optional(),
-        themes: z.array(z.string()).min(1).or(z.string().min(1)).optional(),
-        gameplay_focus: z.string().min(1).optional()
+        gameplay_focus: z.string().min(1).optional(),
+        explanation: z.string().min(1).optional()
       });
-      const { title, description, dice, themes, gameplay_focus } = updateGameSchema.parse(
-        request.body
-      );
-
-      const updateGameUseCase = new UpdateGameUseCase();
-      const game = await updateGameUseCase.execute({
+      const {
+        game_id: gameId,
         title,
         description,
         dice,
-        themes,
-        gameplay_focus
+        gameplay_focus,
+        explanation
+      } = updateGameSchema.parse(request.body);
+
+      const updateGameUseCase = new UpdateGameUseCase();
+      const game = await updateGameUseCase.execute({
+        data: {
+          title,
+          description,
+          dice,
+          gameplay_focus,
+          explanation
+        },
+        gameId
       });
 
       return response.status(200).json(game);

@@ -3,6 +3,7 @@ export type IGameData = {
   title: string;
   description: string;
   cover_path: string;
+  explanation?: string;
   game_themes: {
     theme: {
       name: string;
