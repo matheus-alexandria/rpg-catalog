@@ -55,7 +55,7 @@ export default async function themes(request: NextApiRequest, response: NextApiR
       const deleteThemeUseCase = new DeleteThemeUseCase();
       await deleteThemeUseCase.execute({ id });
 
-      return response.status(202).json({
+      return response.status(201).json({
         message: 'Tema deletado com sucesso.'
       });
     } catch (err) {
