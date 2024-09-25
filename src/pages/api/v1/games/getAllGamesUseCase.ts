@@ -11,6 +11,9 @@ export class GetAllGamesUseCase {
             }
           }
         }
+      },
+      orderBy: {
+        title: 'asc'
       }
     });
 

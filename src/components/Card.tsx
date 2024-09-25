@@ -1,5 +1,6 @@
 'use client';
 import { Trash } from '@phosphor-icons/react';
+import { Role } from '@prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { MouseEvent } from 'react';
@@ -15,9 +16,17 @@ interface CardProps {
     theme: string;
     focus: string;
   };
+  role: Role;
 }
 
-export default function Card({ id, title, imagePath, rpgData, removeCard }: CardProps) {
+export default function Card({
+  id,
+  title,
+  imagePath,
+  rpgData,
+  removeCard,
+  role = 'USER'
+}: CardProps) {
   const router = useRouter();
   const imageMultiplier = 80;
 
@@ -54,13 +63,15 @@ export default function Card({ id, title, imagePath, rpgData, removeCard }: Card
       ) : (
         <div className={'w-[240px] h-[320px] bg-catalog-primary rounded-t-lg'} />
       )}
-      <button
-        type="button"
-        className="absolute translate-y-2 translate-x-24 opacity-0 group-hover:opacity-90 transition-opacity"
-        onClick={(e) => deleteCard(e)}
-      >
-        <Trash size={20} color="#FFFFFF" className="hover:fill-red-500 transition-colors" />
-      </button>
+      {role === 'ADMIN' && (
+        <button
+          type="button"
+          className="absolute translate-y-2 translate-x-24 opacity-0 group-hover:opacity-90 transition-opacity"
+          onClick={(e) => deleteCard(e)}
+        >
+          <Trash size={20} color="#FFFFFF" className="hover:fill-red-500 transition-colors" />
+        </button>
+      )}
 
       <b className="text-2xl text-center font-serif">{title}</b>
 

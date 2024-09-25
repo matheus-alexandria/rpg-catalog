@@ -4,7 +4,6 @@ import { IGameData } from '@/types/IGameData';
 import { IThemeData } from '@/types/IThemeData';
 import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import ImageCropper from './ImageCropper';
 
 export default function AddGameModal(props: AddGameModalProps) {
   const [themeTags, setThemeTags] = useState<IThemeData[]>([]);
@@ -32,6 +31,7 @@ export default function AddGameModal(props: AddGameModalProps) {
       reader.readAsDataURL(file);
     }
   }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   function setFocus(focus: string, buttonIndex: number) {
@@ -105,9 +105,6 @@ export default function AddGameModal(props: AddGameModalProps) {
   return (
     <>
       <div className="fixed h-screen w-screen top-0 left-0 z-5 bg-black opacity-20" />
-      {imagePath && (
-        <ImageCropper imagePath={imagePath} addGameForm={form} setImagePath={setImagePath} />
-      )}
       <div className="fixed left-[31%] top-[4%] w-[44rem] bg-slate-900 px-8 py-6 rounded-lg z-10">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Adicionar novo jogo</h2>

@@ -22,9 +22,28 @@ model Game {
   dice           String?
   cover_path     String?
   game_themes    GameTheme[]
-  Hint           Hint[]
+  hint           Hint[]
+
+  user    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
 
   @@map("games")
+}
+
+enum Role {
+  USER
+  CREATOR
+  ADMIN
+}
+
+model User {
+  id       String @id @default(uuid())
+  login    String @unique
+  password String
+  role     Role   @default(USER)
+  game     Game[]
+
+  @@map("users")
 }
 
 model Hint {
