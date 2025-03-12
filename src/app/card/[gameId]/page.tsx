@@ -10,12 +10,17 @@ export default function CardExpanded({ params }: { params: { gameId: string } })
   const [gameData, setGameData] = useState<IGameData | null>(null);
   const [user, setUser] = useState<IUserData | null>(null);
   const [isUpdateModeOn, setIsUpdateModeOn] = useState(false);
+  const [updatedTitle, setUpdatedTitle] = useState<string | null>(null);
   const [updatedDescription, setUpdatedDescription] = useState<string | null>(null);
+  const [updatedExplanation, setUpdatedExplanation] = useState<string | null>(null);
 
   async function getGameData(gameId: string) {
     const fetchData = await fetch(`/api/v1/games/${gameId}`);
     const gameData = (await fetchData.json()) as { game: IGameData };
     setGameData(gameData.game);
+    setUpdatedDescription(gameData.game.description);
+    setUpdatedExplanation(gameData.game.explanation || DEFAULT_EXPLANATION);
+    setUpdatedTitle(gameData.game.title);
   }
 
   function updateGameData() {
@@ -24,7 +29,9 @@ export default function CardExpanded({ params }: { params: { gameId: string } })
     fetch('/api/v1/games', {
       method: 'PUT',
       body: JSON.stringify({
+        title: updatedTitle,
         description: updatedDescription,
+        explanation: updatedExplanation,
         game_id: params.gameId
       }),
       headers: {
@@ -39,6 +46,12 @@ export default function CardExpanded({ params }: { params: { gameId: string } })
     if (updatedDescription?.length === 0) {
       return false;
     }
+
+    if (updatedTitle?.length === 0) {
+      return false;
+    }
+
+    if (updatedExplanation?.length === 0) return false;
 
     return true;
   }
@@ -63,7 +76,15 @@ export default function CardExpanded({ params }: { params: { gameId: string } })
           </div>
           <div className="flex flex-col rounded-xl px-3">
             <div className="flex justify-between items-center">
-              <b className="text-5xl font-serif">{gameData.title}</b>
+              {isUpdateModeOn ? (
+                <textarea
+                  className="text-5xl font-serif bg-transparent"
+                  defaultValue={gameData.title}
+                  onChange={(e) => setUpdatedTitle(e.target.value)}
+                />
+              ) : (
+                <b className="text-5xl font-serif">{gameData.title}</b>
+              )}
               {user?.role === 'ADMIN' && (
                 <button
                   type="button"
@@ -87,7 +108,15 @@ export default function CardExpanded({ params }: { params: { gameId: string } })
             )}
 
             <b>Como começar a jogar?</b>
-            <p className="mb-8">{gameData?.explanation || DEFAULT_EXPLANATION}</p>
+            {isUpdateModeOn ? (
+              <textarea
+                className="mt-8 mb-12 bg-transparent h-32"
+                defaultValue={gameData?.explanation || DEFAULT_EXPLANATION}
+                onChange={(e) => setUpdatedExplanation(e.target.value)}
+              />
+            ) : (
+              <p className="mb-8">{gameData?.explanation || DEFAULT_EXPLANATION}</p>
+            )}
 
             <strong>Perguntas & Respostas</strong>
             <p className="mt-1 mb-4">

@@ -61,7 +61,10 @@ export default function AddGameModal(props: AddGameModalProps) {
 
     const res = await fetch('/api/v1/games/create', {
       method: 'POST',
-      body: form
+      body: form,
+      headers: {
+        'Content-Type': 'Content-Type: multipart/form-data'
+      }
     });
 
     const data = await res.json();
