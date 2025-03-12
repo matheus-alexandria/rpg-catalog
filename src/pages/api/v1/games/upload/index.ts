@@ -5,9 +5,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function uploadCoverImage(request: NextApiRequest, response: NextApiResponse) {
   if (request.method === 'POST') {
-    const { fields, files } = await parseForm(request);
+    const { parsedFields, file } = await parseForm(request);
 
-    const file = files?.file?.[0];
     const path = file?.filepath;
     if (path) {
       const fileContent = await readFile(path);
@@ -22,7 +21,7 @@ export default async function uploadCoverImage(request: NextApiRequest, response
       }
     }
 
-    return response.status(200).json({ message: 'Fodac' });
+    return response.status(200).json({ message: 'Sucesso no upload de nova imagem' });
   }
 
   return response.status(404).json({
