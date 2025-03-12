@@ -46,7 +46,7 @@ export default function LoginModal(props: LoginModalProps) {
       <div className="fixed h-screen w-screen top-0 left-0 z-5 bg-black opacity-60" />
       <div className="fixed left-[30%] top-[35%] w-[44rem] bg-slate-900 px-8 py-6 rounded-lg z-10">
         <div className="flex justify-between">
-          <p className="font-bold text-xl">Crie seu usuário!</p>
+          <p className="font-bold text-xl">Faça seu login!</p>
           <button className="text-lg font-bold" type="button" onClick={() => props.closeModal()}>
             X
           </button>

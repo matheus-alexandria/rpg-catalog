@@ -92,6 +92,7 @@ export default function AddGameModal(props: AddGameModalProps) {
     for (const theme of chosenThemes) {
       form.append('themes', theme);
     }
+    if (file) form.append('file', file);
   }
 
   useEffect(() => {
@@ -197,7 +198,10 @@ export default function AddGameModal(props: AddGameModalProps) {
           <div className="flex justify-center">
             <div {...getRootProps()} className="p-6 border border-white border-dashed rounded-sm">
               <input {...getInputProps()} />
-              {isDragActive ? <p>Inativa</p> : <p>Arraste uma figura do RPG aqui</p>}
+              {!isDragActive && !file && <p>Arraste uma figura do RPG aqui</p>}
+              {file && imagePath && (
+                <img src={imagePath} className="h-28" alt="drag and dropped file" />
+              )}
             </div>
           </div>
           <button
