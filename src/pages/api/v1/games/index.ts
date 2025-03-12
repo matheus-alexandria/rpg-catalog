@@ -14,7 +14,6 @@ export default async function games(request: NextApiRequest, response: NextApiRe
 
   if (request.method === 'PUT') {
     try {
-      console.log(request.body);
       const updateGameSchema = z.object({
         game_id: z.string().uuid(),
         title: z.string().min(1).optional(),
